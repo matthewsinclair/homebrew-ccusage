@@ -4,8 +4,8 @@ class Ccusage < Formula
   desc "Named Claude Code accounts and a terminal usage dashboard"
   homepage "https://github.com/matthewsinclair/ccusage"
   url "https://github.com/matthewsinclair/ccusage.git",
-      tag:      "v0.1.0",
-      revision: "4fb6f6069a6ddb372e87929e18b9c9cd0c91d38f"
+      tag:      "v0.1.1",
+      revision: "151a5796885b66744b3d1b61e055d1da52a0c496"
   license "MIT"
   head "https://github.com/matthewsinclair/ccusage.git", branch: "main"
 
