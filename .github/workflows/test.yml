@@ -1,0 +1,33 @@
+name: Homebrew install
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    name: ${{ matrix.runner }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-15, ubuntu-22.04]
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      HOMEBREW_NO_INSTALL_CLEANUP: "1"
+    steps:
+      # This official action also checks out and registers the tap under test.
+      - uses: Homebrew/actions/setup-homebrew@d482da0e602890d3160aade42e72c8556103bf04
+        with:
+          stable: true
+      - run: brew style matthewsinclair/ccusage/ccusage
+      - run: brew audit --strict matthewsinclair/ccusage/ccusage
+      - run: brew install --build-from-source matthewsinclair/ccusage/ccusage
+      - run: brew test --verbose matthewsinclair/ccusage/ccusage
+      - run: ccusage --version
