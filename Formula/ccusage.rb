@@ -2,24 +2,24 @@
 # below and the commit it names: edit the template, not this file, which the
 # next render replaces.
 #   template  packaging/homebrew/ccusage.rb
-#   tag       v0.1.7
-#   commit    4c3f155a00be0b149ce9ccf9d5470e3a1af4919f
+#   tag       v0.1.8
+#   commit    ca0e9590b2ad1512b4ef342559f305d769f462a6
 class Ccusage < Formula
   desc "Named Claude Code accounts and a terminal usage dashboard"
   homepage "https://github.com/matthewsinclair/ccusage"
   url "https://github.com/matthewsinclair/ccusage.git",
-      tag:      "v0.1.7",
-      revision: "4c3f155a00be0b149ce9ccf9d5470e3a1af4919f"
+      tag:      "v0.1.8",
+      revision: "ca0e9590b2ad1512b4ef342559f305d769f462a6"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/matthewsinclair/ccusage/releases/download/v0.1.7/ccusage-v0.1.7-aarch64-apple-darwin.tar.gz"
-      sha256 "7089e7dd5f91c0221034a1ef9fcbc3fc768dbcefca2f924cd74bd4eaf39c85e9"
+      url "https://github.com/matthewsinclair/ccusage/releases/download/v0.1.8/ccusage-v0.1.8-aarch64-apple-darwin.tar.gz"
+      sha256 "e03e22d8f8844d8b238e29efa798eb17c1bb84d9aaad997f06a3ecfbd2b8d607"
     end
     on_intel do
-      url "https://github.com/matthewsinclair/ccusage/releases/download/v0.1.7/ccusage-v0.1.7-x86_64-apple-darwin.tar.gz"
-      sha256 "9fa09035f9606b9031b1393665a76fda862c6f12fbc61c68b2f97ada4417be41"
+      url "https://github.com/matthewsinclair/ccusage/releases/download/v0.1.8/ccusage-v0.1.8-x86_64-apple-darwin.tar.gz"
+      sha256 "4926b6afcd59e5311d991a32876cc58c9a297cb4b6cd301edb024f591ac23daa"
     end
   end
 
@@ -38,7 +38,7 @@ class Ccusage < Formula
       files = Dir.glob("**/*", File::FNM_DOTMATCH, base: libexec).select do |f|
         (libexec/f).file? && !(libexec/f).symlink? && f != ".ccusage-install"
       end
-      lines = ["# tool: ccusage", "# version: 0.1.7", "# source_commit: 4c3f155a00be0b149ce9ccf9d5470e3a1af4919f", "# managed_by: brew"]
+      lines = ["# tool: ccusage", "# version: 0.1.8", "# source_commit: ca0e9590b2ad1512b4ef342559f305d769f462a6", "# managed_by: brew"]
       lines += files.sort.map { |f| "#{(libexec/f).sha256}  #{f}" }
       (libexec/".ccusage-install").write("#{lines.join("\n")}\n")
       bin.install_symlink libexec/"ccusage"
@@ -62,7 +62,6 @@ class Ccusage < Formula
       Check your environment with: ccusage doctor
       Set up accounts with: ccusage init
       Existing credentials and XDG configuration are preserved on upgrades.
-      macOS may request Keychain access once per account when moving to signed releases.
     EOS
   end
 
