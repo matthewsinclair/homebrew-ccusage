@@ -2,24 +2,24 @@
 # below and the commit it names: edit the template, not this file, which the
 # next render replaces.
 #   template  packaging/homebrew/ccusage.rb
-#   tag       v0.1.9
-#   commit    2762bbf961ea70e20f65bc2fc3fb87b28fb9f9f3
+#   tag       v0.1.10
+#   commit    5d8346a4989225e1d3de04850e23f92b45ffefc6
 class Ccusage < Formula
   desc "Named Claude Code accounts and a terminal usage dashboard"
   homepage "https://github.com/matthewsinclair/ccusage"
   url "https://github.com/matthewsinclair/ccusage.git",
-      tag:      "v0.1.9",
-      revision: "2762bbf961ea70e20f65bc2fc3fb87b28fb9f9f3"
+      tag:      "v0.1.10",
+      revision: "5d8346a4989225e1d3de04850e23f92b45ffefc6"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/matthewsinclair/ccusage/releases/download/v0.1.9/ccusage-v0.1.9-aarch64-apple-darwin.tar.gz"
-      sha256 "8c6a3c767a0f3bfbd7f427953c52ac5c64789d6852850c33d4f445034983cd12"
+      url "https://github.com/matthewsinclair/ccusage/releases/download/v0.1.10/ccusage-v0.1.10-aarch64-apple-darwin.tar.gz"
+      sha256 "1f27167a1fcf1084e367a4d33d0b1f7dd4a52deb3ee133945973fe6b84e3242f"
     end
     on_intel do
-      url "https://github.com/matthewsinclair/ccusage/releases/download/v0.1.9/ccusage-v0.1.9-x86_64-apple-darwin.tar.gz"
-      sha256 "ccafaf03baec2cc69cc8f42c410d2aeaaf1ef7536da23ce45cc33b4f376080bc"
+      url "https://github.com/matthewsinclair/ccusage/releases/download/v0.1.10/ccusage-v0.1.10-x86_64-apple-darwin.tar.gz"
+      sha256 "ac8bf3bcfe2ca267b6d167bd34cb1ab046bcd4a1c16e9e2b073bb9123b2cd09b"
     end
   end
 
@@ -36,7 +36,8 @@ class Ccusage < Formula
       if buildpath.basename.to_s == "bin"
         (libexec/"bin").install Dir["*"]
       else
-        libexec.install Dir["*"]
+        libexec.mkpath
+        cp_r Dir["*"], libexec, preserve: true
       end
       chmod 0755, libexec/"bin/ccusage"
       files = Dir.glob("**/*", File::FNM_DOTMATCH, base: libexec).select do |f|
@@ -44,10 +45,10 @@ class Ccusage < Formula
       end
       lines = [
         "# tool: ccusage",
-        "# version: 0.1.9",
-        "# source_commit: 2762bbf961ea70e20f65bc2fc3fb87b28fb9f9f3",
+        "# version: 0.1.10",
+        "# source_commit: 5d8346a4989225e1d3de04850e23f92b45ffefc6",
         "# managed_by: brew",
-        "# line: ccusage 0.1.9 (brew, 2762bbf961ea)",
+        "# line: ccusage 0.1.10 (brew, 5d8346a49892)",
       ]
       lines += files.sort.map { |f| "#{(libexec/f).sha256}  #{f}" }
       (libexec/".ccusage-install").write("#{lines.join("\n")}\n")
